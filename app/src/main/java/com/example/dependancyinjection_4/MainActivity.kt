@@ -11,6 +11,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.dependancyinjection_4.ui.theme.DependancyInjection_4Theme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -21,8 +24,28 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             DependancyInjection_4Theme {
-                PokeDex()
+                NavComponent()
             }
         }
+    }
+}
+
+@Composable
+fun NavComponent() {
+
+    val navController = rememberNavController() // to define the state of the navigation
+
+    NavHost(navController = navController, startDestination = "Screen1")
+    {
+        composable("Screen1") {
+            PokeDex(navController = navController)
+        }
+
+
+        composable("Screen2/{name}") {backStackEntry ->
+            val name = backStackEntry.arguments?.getString("name")?.toIntOrNull() ?: 1
+            ProfileUI(navController = navController, name = name.toString())
+        }
+
     }
 }

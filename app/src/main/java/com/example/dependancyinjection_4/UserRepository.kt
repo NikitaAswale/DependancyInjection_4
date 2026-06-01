@@ -8,7 +8,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class UserRepository @Inject constructor(val apiService: APIService) {
+class UserRepository @Inject constructor(val apiService: APIService, val postAPIService: PostAPIService) {
 
     fun getPosts () : Flow<PagingData<Result>> {
         return Pager(
@@ -20,6 +20,10 @@ class UserRepository @Inject constructor(val apiService: APIService) {
                 CharacterPagingSource(apiService)
             }
         ).flow
+    }
+
+    suspend fun getUsers(name : String) : Posts{
+        return postAPIService.getUsers(name)
     }
 
 }

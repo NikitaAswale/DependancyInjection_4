@@ -1,6 +1,7 @@
 package com.example.dependancyinjection_4
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -40,11 +41,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PokeDex(viewModel: UsersViewModel = hiltViewModel()) {
+fun PokeDex(viewModel: UsersViewModel = hiltViewModel(), navController: NavController) {
 
     val character = viewModel.character.collectAsLazyPagingItems()
 
@@ -204,7 +206,7 @@ fun PokeDex(viewModel: UsersViewModel = hiltViewModel()) {
 
                 items(character.itemCount) { index ->
                     character[index]?.let {
-                        ProfileList(character = it)
+                        ProfileList(character = it, navController)
                     }
                 }
 
@@ -214,13 +216,16 @@ fun PokeDex(viewModel: UsersViewModel = hiltViewModel()) {
 }
 
     @Composable
-    fun ProfileList(character: com.example.dependancyinjection_4.Result) {
+    fun ProfileList(character: Result, navController: NavController) {
 
 
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
+                .padding(16.dp)
+                .clickable{
+                    navController.navigate("Screen2/${character.name}")
+                },
             elevation = CardDefaults.cardElevation(4.dp),
             colors = CardDefaults.cardColors(containerColor = Color.White),
             shape = RoundedCornerShape(16.dp)
