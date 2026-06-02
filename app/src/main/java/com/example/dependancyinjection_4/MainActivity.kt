@@ -33,7 +33,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun NavComponent() {
 
-    val navController = rememberNavController() // to define the state of the navigation
+    val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = "Screen1")
     {
