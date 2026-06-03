@@ -43,8 +43,8 @@ fun NavComponent() {
 
 
         composable("Screen2/{name}") {backStackEntry ->
-            val name = backStackEntry.arguments?.getString("name")?.toIntOrNull() ?: 1
-            ProfileUI(navController = navController, name = name.toString())
+            val name = backStackEntry.arguments?.getString("name") ?: ""
+            ProfileUI(navController = navController, name = name)
         }
 
     }
