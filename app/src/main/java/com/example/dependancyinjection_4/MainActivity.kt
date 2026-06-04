@@ -35,8 +35,7 @@ fun NavComponent() {
 
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = "Screen1")
-    {
+    NavHost(navController = navController, startDestination = "Screen1") {
         composable("Screen1") {
             PokeDex(navController = navController)
         }
