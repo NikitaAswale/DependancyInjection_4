@@ -39,12 +39,9 @@ fun NavComponent() {
         composable("Screen1") {
             PokeDex(navController = navController)
         }
-
-
-        composable("Screen2/{name}") {backStackEntry ->
+        composable("Screen2/{name}") { backStackEntry ->
             val name = backStackEntry.arguments?.getString("name") ?: ""
             ProfileUI(navController = navController, name = name)
         }
-
     }
 }
