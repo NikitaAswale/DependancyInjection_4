@@ -52,7 +52,11 @@ import androidx.navigation.NavController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProfileUI(navController: NavController, name : String, viewModel: UsersViewModel = hiltViewModel())  {
+fun ProfileUI(
+    navController: NavController,
+    name: String,
+    viewModel: UsersViewModel = hiltViewModel()
+) {
 
     val users = viewModel.user.collectAsState().value
 
@@ -173,9 +177,11 @@ fun ProfileUI(navController: NavController, name : String, viewModel: UsersViewM
         }
     ) { paddingValues ->
 
-        LazyColumn(modifier = Modifier
-            .fillMaxSize()
-            .padding(paddingValues)) {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+        ) {
 
             item {
                 PokeDexUI(navController, users)
@@ -218,33 +224,10 @@ fun PokeDexUI(navController: NavController, users: Posts?) {
             verticalAlignment = Alignment.CenterVertically
         ) {
 
-            Button(
-                onClick = {},
-                modifier = Modifier,
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF77DD77))
-            ) {
-                Text(
-                    "GRASS",
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White,
-                    modifier = Modifier
-                )
-            }
-
-            Spacer(Modifier.width(12.dp))
-
-            Button(
-                onClick = {},
-                modifier = Modifier,
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF800080))
-            ) {
-                Text(
-                    "POISON",
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White
-                )
+            users?.let {
+                for (i in it.types){
+                    Types(name = i.type.name)
+                }
             }
         }
 
@@ -322,7 +305,7 @@ fun PokeDexUI(navController: NavController, users: Posts?) {
                     ) {
 
                         Text(
-                            "WEIGHT" ,
+                            "WEIGHT",
                             fontSize = 14.sp,
                             fontWeight = FontWeight.Bold,
                             color = Color.Gray
@@ -334,19 +317,18 @@ fun PokeDexUI(navController: NavController, users: Posts?) {
                             fontWeight = FontWeight.Bold,
                             color = Color.Black
                         )
-
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.End,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Icon(
-                                Icons.Default.Person, contentDescription = "",
-                                tint = Color(0xFFA52A2A)
-                            )
-                        }
                     }
 
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.End,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            Icons.Default.Person, contentDescription = "",
+                            tint = Color(0xFFA52A2A)
+                        )
+                    }
                 }
             }
         }
@@ -371,126 +353,11 @@ fun PokeDexUI(navController: NavController, users: Posts?) {
 
                 Spacer(Modifier.height(8.dp))
 
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-
-                    Text(
-                        "HP",
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.Gray
-                    )
-                    Text(
-                        "45/255",
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.Gray
-                    )
+                users?.let {
+                    for (i in it.stats) {
+                        BaseStats(name = i.stat.name, value = i.base_stat)
+                    }
                 }
-
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-
-                    Text(
-                        "ATTACK",
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.Gray
-                    )
-                    Text(
-                        "49/255",
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.Gray
-                    )
-                }
-
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-
-                    Text(
-                        "DEFENSE",
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.Gray
-                    )
-                    Text(
-                        "49/255",
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.Gray
-                    )
-                }
-
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-
-                    Text(
-                        "SP.ATK",
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.Gray
-                    )
-                    Text(
-                        "65/255",
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.Gray
-                    )
-                }
-
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-
-                    Text(
-                        "SP.DEF",
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.Gray
-                    )
-                    Text(
-                        "65/255",
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.Gray
-                    )
-                }
-
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-
-                    Text(
-                        "SPEED",
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.Gray
-                    )
-                    Text(
-                        "45/255",
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.Gray
-                    )
-                }
-
             }
 
         }
@@ -504,9 +371,11 @@ fun PokeDexUI(navController: NavController, users: Posts?) {
             colors = CardDefaults.cardColors(containerColor = Color.White)
         ) {
 
-            Column(modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+            ) {
 
                 Text(
                     "Abilities",
@@ -517,90 +386,25 @@ fun PokeDexUI(navController: NavController, users: Posts?) {
 
                 Spacer(Modifier.height(5.dp))
 
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(12.dp),
-                    elevation = CardDefaults.cardElevation(4.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color.White)
-                ) {
+                users?.let {
+                    if (it.abilities.isNotEmpty()) {
 
-                    Column(modifier = Modifier.padding(12.dp)) {
-                        Row() {
-
-                            Icon(
-                                Icons.Default.Place, contentDescription = "",
-                                tint = Color(0xFFA52A2A)
-                            )
-
-                            Spacer(Modifier.width(12.dp))
-
-                            Text(
-                                "Overgrow",
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 20.sp,
-                                color = Color.Black
-                            )
+                        for (i in it.abilities) {
+                            Abilities(name = i.ability.name)
                         }
-
-                        Spacer(Modifier.height(2.dp))
-
-                        Text(
-                            "description",
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = Color.Gray
-                        )
                     }
                 }
 
-                Spacer(modifier = Modifier.height(5.dp))
-
-
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(12.dp),
-                    elevation = CardDefaults.cardElevation(4.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color.White)
-                ) {
-
-                    Column(modifier = Modifier.padding(12.dp)) {
-                        Row() {
-
-                            Icon(
-                                Icons.Default.Place, contentDescription = "",
-                                tint = Color(0xFFA52A2A)
-                            )
-
-                            Spacer(Modifier.width(12.dp))
-
-                            Text(
-                                "Chlorophyll",
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 20.sp,
-                                color = Color.Black
-                            )
-                        }
-
-                        Spacer(Modifier.height(2.dp))
-
-                        Text(
-                            "description",
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = Color.Gray
-                        )
-                    }
-                }
             }
         }
     }
 
 
     Spacer(modifier = Modifier.height(10.dp))
-    Box(modifier = Modifier.fillMaxWidth(),
-        contentAlignment = Alignment.Center) {
+    Box(
+        modifier = Modifier.fillMaxWidth(),
+        contentAlignment = Alignment.Center
+    ) {
 
         Button(
             onClick = {},
@@ -629,4 +433,90 @@ fun PokeDexUI(navController: NavController, users: Posts?) {
 
         }
     }
+}
+
+@Composable
+fun BaseStats(name: String?, value: Int?) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+
+        Text(
+            "${name}",
+            fontSize = 14.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color.Gray
+        )
+        Text(
+            "${value}/255",
+            fontSize = 14.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color.Gray
+        )
+    }
+}
+
+@Composable
+fun Abilities(name: String?) {
+
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(12.dp),
+        elevation = CardDefaults.cardElevation(4.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.White)
+    ) {
+
+        Column(modifier = Modifier.padding(12.dp)) {
+            Row() {
+
+                Icon(
+                    Icons.Default.Place, contentDescription = "",
+                    tint = Color(0xFFA52A2A)
+                )
+
+                Spacer(Modifier.width(12.dp))
+
+                Text(
+                    "${name}",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 20.sp,
+                    color = Color.Black
+                )
+
+            }
+
+            Spacer(Modifier.height(2.dp))
+
+            Text(
+                "description",
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.Gray
+            )
+        }
+    }
+}
+
+@Composable
+fun Types(name: String){
+
+    Button(
+        onClick = {},
+        modifier = Modifier,
+        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF77DD77))
+    ) {
+        Text(
+            "${name}",
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color.White,
+            modifier = Modifier
+        )
+    }
+
+    Spacer(Modifier.width(12.dp))
+
 }
